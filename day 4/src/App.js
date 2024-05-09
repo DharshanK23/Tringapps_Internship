@@ -2,6 +2,7 @@ import './components/regform.jsx'
 import {BrowserRouter, Route,Routes} from "react-router-dom";
 import Registration from './components/regform.jsx';
 import Home from './components/home.jsx';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
   <BrowserRouter>
