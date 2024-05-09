@@ -1,1 +1,0 @@
-# Tringapps_Internship
