@@ -2,7 +2,7 @@ import React,{useState}from 'react';
 import { useNavigate } from 'react-router-dom';
 function Registration() {
   const navigate = useNavigate();
-  const [name,setName]  = useState('');
+  const [sname,setName]  = useState('');
   const validate = (event) => {
     event.preventDefault();
     var fname = event.target.elements.name.value;
@@ -25,7 +25,7 @@ function Registration() {
       alert("Enter project details");
       return;
     }  
-    setName(name);
+    setName(sname);
     navigate('/home',{state : {fname}});
     // window.location.href = "/home";
   };  
