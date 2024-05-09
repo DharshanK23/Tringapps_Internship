@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+//import { useLocation } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 
 function Home() {
-    const location = useLocation();
+    //const location = useLocation();
     const [userData, setUserData] = useState([]);
     
     useEffect(() => {
         const existingUsers = JSON.parse(localStorage.getItem("user")) || [];
-        const userDataWithIds = existingUsers.concat(location.state).map((user, index) => ({...user,id:index}));
+        const userDataWithIds = existingUsers.map((user, index) => ({id:index,...user}));
         setUserData(userDataWithIds);
-    });
+    },[]);
 
     const columns = [
         { field: 'name', headerName: 'Name', width: 150 },
