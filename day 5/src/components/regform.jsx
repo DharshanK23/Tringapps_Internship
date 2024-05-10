@@ -16,12 +16,12 @@ function Registration() {
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     setFormData(prevState => ({...prevState,[name]: type === 'checkbox' ?checked ? [...prevState[name], value] : prevState[name].filter(language => language !== value): value
-    }));
+    }));// checked means add value ,uncheck means remove the value and non checkboxes means update value
   };
 
   const validate = (event) => {
     event.preventDefault();
-    const { name, email, project } = formData;
+    const { name, email, project,gender,locat } = formData;
     const val = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (name === "") {
       alert("Please enter your name");
@@ -33,6 +33,14 @@ function Registration() {
     }
     if (!val.test(email)) {
       alert("Invalid email");
+      return;
+    }
+    if (gender === ""){
+      alert("Enter your gender");
+      return;
+    } 
+    if (locat === ""){
+      alert("Select your location");
       return;
     }
     if (project === "") {
@@ -78,9 +86,9 @@ function Registration() {
         </div>
         <br />
         <label>Preferred Location:</label>
-        <select className="form-select" name="locat" value={formData.locat} onChange={handleChange}>
-          <option>Select location</option>
-          <option>Chennai</option>
+        <select className="form-select" name="locat" value={formData.locat} onChange={handleChange} >
+          <option >Select Location</option>
+          <option >Chennai</option>
           <option>Bangalore</option>
           <option>Hyderabad</option>
         </select>
