@@ -39,7 +39,7 @@ function Registration() {
       alert("Enter project details");
       return;
     }
-    const olduser =JSON.parse(localStorage.getItem("user"))||[];//convert js string to js objects
+    const olduser =JSON.parse(localStorage.getItem("user"))||[];
     olduser.push({
         name:formData.name,
         email:formData.email,
@@ -48,7 +48,7 @@ function Registration() {
         language:formData.language,
         project:formData.project
     });
-    localStorage.setItem("user",JSON.stringify(olduser))//convert js objects to js string
+    localStorage.setItem("user",JSON.stringify(olduser))
     navigate('/home', { state: formData });
   };
 

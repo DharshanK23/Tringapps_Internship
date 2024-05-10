@@ -7,7 +7,7 @@ function Home() {
     const [userData, setUserData] = useState([]);
     
     useEffect(() => {
-        const olduser = JSON.parse(localStorage.getItem("user")) || [];//convert js string to objects
+        const olduser = JSON.parse(localStorage.getItem("user")) || [];
         const userDataWithIds = olduser.map((user, index) => ({id:index,...user}));
         setUserData(userDataWithIds);
     },[]);
