@@ -12,7 +12,7 @@ function Home() {
         setUserData(userDataWithIds);
     },[]);
 
-    const columns = [
+    const columns = [~
         { field: 'name', headerName: 'Name', width: 150 },
         { field: 'email', headerName: 'Email', width: 200 },
         { field: 'project', headerName: 'Project', width: 250 },
