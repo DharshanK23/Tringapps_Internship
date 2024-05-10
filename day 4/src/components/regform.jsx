@@ -16,12 +16,12 @@ function Registration() {
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     setFormData(prevState => ({...prevState,[name]: type === 'checkbox' ?checked ? [...prevState[name], value] : prevState[name].filter(language => language !== value): value
-    }));
+    }));// checked means add value ,uncheck means remove the value and non checkboxes means update value
   };
 
   const validate = (event) => {
     event.preventDefault();
-    const { name, email, project } = formData;
+    const { name, email, project,gender,locat } = formData;
     const val = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (name === "") {
       alert("Please enter your name");
@@ -35,11 +35,19 @@ function Registration() {
       alert("Invalid email");
       return;
     }
+    if (gender === ""){
+      alert("Enter your gender");
+      return;
+    } 
+    if (locat === ""){
+      alert("Select your location");
+      return;
+    }
     if (project === "") {
       alert("Enter project details");
       return;
     }
-    const olduser =JSON.parse(localStorage.getItem("user"))||[];// js string to js objects
+    const olduser =JSON.parse(localStorage.getItem("user"))||[];
     olduser.push({
         name:formData.name,
         email:formData.email,
@@ -48,7 +56,7 @@ function Registration() {
         language:formData.language,
         project:formData.project
     });
-    localStorage.setItem("user",JSON.stringify(olduser))// js objects to js string
+    localStorage.setItem("user",JSON.stringify(olduser))
     navigate('/home', { state: formData });
   };
 
@@ -78,9 +86,9 @@ function Registration() {
         </div>
         <br />
         <label>Preferred Location:</label>
-        <select className="form-select" name="locat" value={formData.locat} onChange={handleChange}>
-          <option>Select location</option>
-          <option>Chennai</option>
+        <select className="form-select" name="locat" value={formData.locat} onChange={handleChange} >
+          <option >Select Location</option>
+          <option >Chennai</option>
           <option>Bangalore</option>
           <option>Hyderabad</option>
         </select>

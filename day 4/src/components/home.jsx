@@ -7,12 +7,12 @@ function Home() {
     const [userData, setUserData] = useState([]);
     
     useEffect(() => {
-        const olduser = JSON.parse(localStorage.getItem("user")) || [];// js string to objects else empty array will be printed
+        const olduser = JSON.parse(localStorage.getItem("user")) || [];
         const userDataWithIds = olduser.map((user, index) => ({id:index,...user}));
         setUserData(userDataWithIds);
-    });
+    },[]);
 
-    const columns = [//column specify
+    const columns = [
         { field: 'name', headerName: 'Name', width: 150 },
         { field: 'email', headerName: 'Email', width: 200 },
         { field: 'project', headerName: 'Project', width: 250 },
