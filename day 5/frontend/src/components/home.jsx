@@ -19,9 +19,7 @@ function Home() {
                 console.error('Error fetching users:', error);
             });
     }, []);
-
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
         { field: 'name', headerName: 'Name', width: 150 },
         { field: 'email', headerName: 'Email', width: 200 },
         { field: 'project', headerName: 'Project', width: 250 },
@@ -31,7 +29,7 @@ function Home() {
     ];
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <div>
             <DataGrid
                 rows={userData}
                 columns={columns}

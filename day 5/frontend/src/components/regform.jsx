@@ -47,17 +47,20 @@ function Registration() {
       alert("Enter project details");
       return;
     }
-    const olduser =JSON.parse(localStorage.getItem("user"))||[];
-    olduser.push({
-        name:formData.name,
-        email:formData.email,
-        gender:formData.gender,
-        locat:formData.locat,
-        language:formData.language,
-        project:formData.project
-    });
-    localStorage.setItem("user",JSON.stringify(olduser))
-    navigate('/home', { state: formData });
+    // const olduser =JSON.parse(localStorage.getItem("user"))||[];
+    // olduser.push({
+    //     name:formData.name,
+    //     email:formData.email,
+    //     gender:formData.gender,
+    //     locat:formData.locat,
+    //     language:formData.language,
+    //     project:formData.project
+    // });
+    // localStorage.setItem("user",JSON.stringify(olduser))
+    // navigate('/home', { state: formData });
+    axios.post('http://localhost:8081/formdb',values)
+    .then(res => console.log(res))
+    .catch(err=>console.log(err));
   };
 
   return (
