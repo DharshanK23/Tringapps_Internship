@@ -4,34 +4,55 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // Add this line to parse JSON request bodies
+app.use(express.json());
 
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '#Dharshan237',
-  database: 'formdb'
-})
+  database: 'formdb',
+});
 
-app.post('/formdb', (req, res) => {
-  const sql = "INSERT INTO user (name, email, gender, locat, language, project) VALUES (?, ?, ?, ?, ?, ?)";
+db.connect((err) => {
+  if (err) {
+    console.error('Error connecting to database:', err);
+    return;
+  }
+  console.log('Connected to the database');
+});
+
+app.post('/user', (req, res) => {
+  const sql = "INSERT INTO user (name, email, gender, locat, language, project) VALUES (?, ?, ?, ?, ?,)";
   const values = [
     req.body.name,
     req.body.email,
     req.body.gender,
     req.body.locat,
-    req.body.language,
+    req.body.language.join(', '),
     req.body.project,
-  ]
-  connection.query(sql, values, (err, data) => {
+  ];
+  db.query(sql, values, (err, result) => {
     if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Error inserting data' });
+      console.error('Error executing query:', err);
+      return res.json({ success: false, error: err.message });
     }
-    return res.json({ success: true, data: data });
+    return res.json({ success: true, result });
   });
 });
 
-app.listen(8081, () => {
-  console.log("Listening...");
+app.get('/users', ( res) => {
+  const sql = "SELECT * FROM user";
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      return res.status(500).json({ success: false, error: err.message });
+    }
+    return res.status(200).json(rows);
+  });
 });
+
+
+app.listen(8081, () => {
+  console.log("Server is running on port");
+});
+

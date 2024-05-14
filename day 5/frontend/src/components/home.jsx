@@ -1,41 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 
 function Home() {
-    const [userData, setUserData] = useState([]);
+  const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        fetch('/api/users')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch users');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setUserData(data);
-            })
-            .catch(error => {
-                console.error('Error fetching users:', error);
-            });
-    }, []);
-    const columns = [
-        { field: 'name', headerName: 'Name', width: 150 },
-        { field: 'email', headerName: 'Email', width: 200 },
-        { field: 'project', headerName: 'Project', width: 250 },
-        { field: 'gender', headerName: 'Gender', width: 120 },
-        { field: 'locat', headerName: 'Location', width: 150 },
-        { field: 'language', headerName: 'Languages Known', width: 200 },
-    ];
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await axios.get('http://localhost:8081/users');
+        setUsers(response.data.map((user, index) => ({ ...user, id: index})));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetch();
+  }, []);
 
-    return (
-        <div>
-            <DataGrid
-                rows={userData}
-                columns={columns}
-            />
-        </div>
-    );
+  const columns = [
+    { field: 'name', headerName: 'Name', width: 130 },
+    { field: 'email', headerName: 'Email', width: 200 },
+    { field: 'gender', headerName: 'Gender', width: 100 },
+    { field: 'locat', headerName: 'Location', width: 150 },
+    { field: 'language', headerName: 'Languages', width: 150 },
+    { field: 'project', headerName: 'Project', width: 150 },
+  ];
+
+  
+
+  return (
+    <div >
+      <DataGrid
+        rows={users}
+        columns={columns}
+      />
+    </div>
+  );
 }
 
 export default Home;

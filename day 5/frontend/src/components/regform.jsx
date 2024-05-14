@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Style.css';
 
 function Registration() {
@@ -10,67 +11,52 @@ function Registration() {
     gender: '',
     locat: '',
     language: [],
-    project: ''
+    project: '',
   });
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    setFormData(prevState => ({...prevState,[name]: type === 'checkbox' ?checked ? [...prevState[name], value] : prevState[name].filter(language => language !== value): value
-    }));// checked means add value ,uncheck means remove the value and non checkboxes means update value
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: type === 'checkbox'
+        ? checked
+          ? [...prevState[name], value]
+          : prevState[name].filter((language) => language !== value)
+        : value,
+    }));
   };
 
   const validate = (event) => {
     event.preventDefault();
-    const { name, email, project,gender,locat } = formData;
+    const { name, email, project, gender, locat } = formData;
     const val = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (name === "") {
-      alert("Please enter your name");
-      return;
-    }
-    if (email === "") {
-      alert("Please enter your email");
+    if (name === '' || email === '' || project === '' || gender === '' || locat === '') {
+      alert('Please fill all fields');
       return;
     }
     if (!val.test(email)) {
-      alert("Invalid email");
+      alert('Invalid email');
       return;
     }
-    if (gender === ""){
-      alert("Enter your gender");
-      return;
-    } 
-    if (locat === ""){
-      alert("Select your location");
-      return;
-    }
-    if (project === "") {
-      alert("Enter project details");
-      return;
-    }
-    // const olduser =JSON.parse(localStorage.getItem("user"))||[];
-    // olduser.push({
-    //     name:formData.name,
-    //     email:formData.email,
-    //     gender:formData.gender,
-    //     locat:formData.locat,
-    //     language:formData.language,
-    //     project:formData.project
-    // });
-    // localStorage.setItem("user",JSON.stringify(olduser))
-    // navigate('/home', { state: formData });
-    axios.post('http://localhost:8081/formdb',values)
-    .then(res => console.log(res))
-    .catch(err=>console.log(err));
+
+    axios.post('http://localhost:8081/user', formData)
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Error");
+      });
   };
 
   return (
     <div>
-      <form name="frm" className="box" onSubmit={validate}>
+      <form name="frm" className="box" onSubmit={validate} action="post">
         <h1 className="text-center">Job Registration Form</h1>
         <br />
         <label>Name:</label>
         <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-control" />
-        <br/>
+        <br />
         <label>Email:</label>
         <input type="text" name="email" value={formData.email} onChange={handleChange} className="form-control" />
         <br />
@@ -89,9 +75,9 @@ function Registration() {
         </div>
         <br />
         <label>Preferred Location:</label>
-        <select className="form-select" name="locat" value={formData.locat} onChange={handleChange} >
-          <option >Select Location</option>
-          <option >Chennai</option>
+        <select className="form-select" name="locat" value={formData.locat} onChange={handleChange}>
+          <option>Select Location</option>
+          <option>Chennai</option>
           <option>Bangalore</option>
           <option>Hyderabad</option>
         </select>
