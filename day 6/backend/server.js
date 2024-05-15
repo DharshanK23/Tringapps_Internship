@@ -22,7 +22,7 @@ db.connect((err) => {
 });
 
 app.post('/user', (req, res) => {
-  const sql = "INSERT INTO user (name, email, gender, locat, language, project) VALUES (?, ?, ?, ?, ?,?)";
+  const sql = "INSERT INTO user (name, email, gender, locat, language, project) VALUES (?, ?, ?, ?, ?, ?)";
   const values = [
     req.body.name,
     req.body.email,
@@ -40,7 +40,7 @@ app.post('/user', (req, res) => {
   });
 });
 
-app.get('/users', ( res) => {
+app.get('/users', (req, res) => {
   const sql = "SELECT * FROM user";
   db.query(sql, (err, rows) => {
     if (err) {
@@ -50,7 +50,8 @@ app.get('/users', ( res) => {
     return res.status(200).json(rows);
   });
 });
+
+
 app.listen(8081, () => {
   console.log("Server is running on port");
 });
-
