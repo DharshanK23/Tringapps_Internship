@@ -14,7 +14,7 @@ body::before {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 1  00%;
   height: 100%; 
   background: inherit;
   filter: blur(2px);
@@ -22,9 +22,9 @@ body::before {
 }
 
 .form-container {
-  width: 100%;
+  width: 120%;
   max-width: 600px;
-  padding: 40px;
+  padding: 10px;
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -35,7 +35,8 @@ body::before {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  max-height: 70vh;
+  max-height: 85vh;
+  padding: 10px;
 }
 
 .form-group {
@@ -64,6 +65,7 @@ label {
   display: flex;
   justify-content: center;
   text-align: center;
+  font-size: 30px;
 }
 
 .btn {
