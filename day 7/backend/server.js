@@ -21,16 +21,11 @@ db.connect((err) => {
   console.log('Connected to the database');
 });
 
+
 app.post('/user', (req, res) => {
+  const { name, email, gender, locat, language, project } = req.body;
   const sql = "INSERT INTO user (name, email, gender, locat, language, project) VALUES (?, ?, ?, ?, ?, ?)";
-  const values = [
-    req.body.name,
-    req.body.email,
-    req.body.gender,
-    req.body.locat,
-    req.body.language.join(', '),
-    req.body.project,
-  ];
+  const values = [name, email, gender, locat, language.join(', '), project];
   db.query(sql, values, (err, result) => {
     if (err) {
       console.error('Error executing query:', err);
@@ -40,7 +35,8 @@ app.post('/user', (req, res) => {
   });
 });
 
-app.get('/users', (req, res) => {
+
+app.get('/users', (res) => {
   const sql = "SELECT * FROM user";
   db.query(sql, (err, rows) => {
     if (err) {
@@ -52,6 +48,32 @@ app.get('/users', (req, res) => {
 });
 
 
+app.put('/user', (req, res) => {
+  const { id, name, email, gender, locat, language, project } = req.body;
+  const sql = "UPDATE user SET name=?, email=?, gender=?, locat=?, language=?, project=? WHERE id=?";
+  const values = [name, email, gender, locat, language.join(', '), project, id];
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      return res.json({ success: false, error: err.message });
+    }
+    return res.json({ success: true, result });
+  });
+});
+
+
+app.delete('/user', (req, res) => {
+  const { id } = req.body;
+  const sql = "DELETE FROM user WHERE id=?";
+  db.query(sql, id, (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      return res.json({ success: false, error: err.message });
+    }
+    return res.json({ success: true, result });
+  });
+});
+
 app.listen(8081, () => {
-  console.log("Server is running on port");
+  console.log("Server is running on port 8081");
 });
