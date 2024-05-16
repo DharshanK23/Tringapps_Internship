@@ -26,12 +26,10 @@ function Home() {
     { field: 'project', headerName: 'Project', width: 150 },
   ];
   return (
-    <div >
-      <DataGrid
-        rows={users}
-        columns={columns}
-      />
-    </div>
+    <div className="container">
+      <DataGrid rows={users} columns={columns} className="styl"
+       />
+      </div>
   );
 }
 
