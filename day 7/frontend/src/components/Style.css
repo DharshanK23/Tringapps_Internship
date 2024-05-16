@@ -1,0 +1,84 @@
+body {
+  background: url('bg.jpg');
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  margin: 0; 
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1  00%;
+  height: 100%; 
+  background: inherit;
+  filter: blur(2px);
+  z-index: -1;
+}
+
+.form-container {
+  width: 120%;
+  max-width: 600px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 85vh;
+  padding: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+.bold-label {
+  font-weight: bold;
+}
+
+.form-control {
+  margin-bottom: 10px;
+}
+
+.form-check-label, .form-check-input {
+  margin-right: 12px;
+}
+
+.text-center {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 30px;
+}
+
+.btn {
+  width: 100%;
+  max-width: 300px;
+}
+
+.styl {
+  background-color: white;
+  color: black;
+}
+
+.container {
+  height: 500px;
+  width: 50%;
+}
