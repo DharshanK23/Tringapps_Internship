@@ -49,7 +49,7 @@ function Registration() {
   };
 
   return (
-    <div className="form-container"  id="scrollbar">
+    <div className="form-container" id="scrollbar">
       <form name="frm" className="box" onSubmit={validate} action="post">
         <h1 className="text-center">Job Registration Form</h1>
         <div className="form-group">
@@ -107,7 +107,7 @@ function Registration() {
           <button type="submit" className="btn btn-dark">Submit</button>
         </div>
       </form>
-      </div>
+    </div>
   );  
 }
 

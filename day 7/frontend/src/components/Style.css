@@ -82,3 +82,8 @@ label {
   height: 500px;
   width: 50%;
 }
+
+.button{
+  display: flex;
+  justify-content: center;
+}
