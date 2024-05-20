@@ -53,7 +53,7 @@ app.delete('/del/:id',(req, res) => {
       return res.send(result);
     }
     catch(error){
-    console.error("Error in delete method",err);}
+    alert("Error in delete method",err);}
   });
 });
 
