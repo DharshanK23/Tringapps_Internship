@@ -24,7 +24,7 @@ db.connect((err) => {
 app.post('/user', (req, res) => {
   const { name,email,gender,locat,language,project} = req.body;//use data from (1)
   const sql = "INSERT INTO user (name,email,gender,locat,language,project) VALUES (?,?,?,?,?,?)";
-  db.query(sql,[name,email,gender,locat,language,project], (err, result) => {
+  db.query(sql,[name,email,gender,locat,language.join(', '),project], (err, result) => {
     try{
       return res.send(result);
     }
@@ -47,7 +47,6 @@ app.get('/users',(req,res) => {
 app.delete('/del/:id',(req, res) => {
   const { id } = req.params;
   const sql = "DELETE FROM user WHERE id = ?";
-  
   db.query(sql,id,(err,result) => {
     try{
       return res.send(result);
@@ -61,7 +60,7 @@ app.put('/userupdate/:id',(req,res) => {
   const { id } = req.params;
   const { name,email,gender,locat,language,project} = req.body;
   const sql = "UPDATE user SET name = ?,email = ?,gender = ?,locat = ?,language = ?,project = ? WHERE id = ?";
-  db.query(sql,[name,email,gender,locat,language,project,id],(err,rows) => {
+  db.query(sql,[name,email,gender,locat,language.join(', '),project,id],(err,rows) => {
     try{
       return res.send(rows);
     }

@@ -1,6 +1,6 @@
 body {
-  /* background: url('bg.jpg'); */
-  background-size: cover;
+  /* background: url('bg.jpg');
+  background-size: cover; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,11 +76,6 @@ label {
 .styl {
   background-color: white;
   color: black;
-}
-
-.container {
-  height: 500px;
-  width: 50%;
 }
 
 .button{
