@@ -125,7 +125,7 @@ function Home() {
   return (   
       <div className='styl'>
       <Button onClick={() => navigate('/')} variant="contained" color="primary"style={{marginRight:"10px",marginLeft:"10px",marginBottom:"10px",marginTop:"10px",}}>Registration Form</Button>
-      <Button onClick={handleCheckDel} variant="contained" color="primary"style={{marginRight:"10px",marginLeft:"10px",marginBottom:"10px",marginTop:"10px",}}>Delete Selected</Button>
+      <Button onClick={handleCheckDel} variant="contained" color="primary"style={{marginRight:"10px",marginLeft:"10px",marginBottom:"10px",marginTop:"10px",}} disabled={arrid.length===0}>Delete Selected</Button>
       <DataGrid rows={users} columns={columns}
           editRowsModel={editRowsModel}
           onEditRowsModelChange={handleEditRowsModelChange}
