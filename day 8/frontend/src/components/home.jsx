@@ -12,6 +12,7 @@ function Home() {
   const [users, setUsers] = useState([]);
   const [editMode, setEditMode] = useState({ id: null });
   const [editRowsModel, setEditRowsModel] = useState({});
+  const [arrid,setArray]=useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -75,10 +76,19 @@ function Home() {
       console.error('Error deleting user:', error);
     }
   };
+  const handleCheckDel = async()=>{
+    try {
+      await (arrid.map(id => axios.delete(`http://localhost:8081/del/${id}`)));
+      setUsers(users.filter(user => !arrid.includes(user.id)));
+      setArray([]);
+    } catch (error) {
+      console.error('Error deleting selected users:', error);
+    }
+  };
 
   const columns = [
     { field: 'name', headerName: 'Name', width: 130, editable: true },
-    { field: 'email', headerName: 'E-mail', width: 200, editable: true },
+    { field: 'email', headerName: 'Email', width: 200, editable: true },
     { field: 'gender', headerName: 'Gender', width: 100, editable: true },
     { field: 'locat', headerName: 'Location', width: 150, editable: true },
     { field: 'language', headerName: 'Language', width: 150, editable: true },
@@ -113,15 +123,19 @@ function Home() {
     },
   ];
   return (   
-      <div >
+      <div className='styl'>
       <Button onClick={() => navigate('/')} variant="contained" color="primary"style={{marginRight:"10px",marginLeft:"10px",marginBottom:"10px",marginTop:"10px",}}>Registration Form</Button>
-      <Button variant="contained" color="primary"style={{marginRight:"10px",marginLeft:"10px",marginBottom:"10px",marginTop:"10px",}}>Delete Selected</Button>
+      <Button onClick={handleCheckDel} variant="contained" color="primary"style={{marginRight:"10px",marginLeft:"10px",marginBottom:"10px",marginTop:"10px",}}>Delete Selected</Button>
       <DataGrid rows={users} columns={columns}
           editRowsModel={editRowsModel}
           onEditRowsModelChange={handleEditRowsModelChange}
           processRowUpdate={handleProcessRowUpdate}
           experimentalFeatures={{ newEditingApi: true }}
           checkboxSelection
+          disableRowSelectionOnClick
+          onRowSelectionModelChange={(ids)=>{
+              setArray(ids);
+          }}
       />
       </div>
   );
