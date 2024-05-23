@@ -22,8 +22,9 @@ db.connect((err) => {
 });
 
 app.post('/user', (req, res) => {
-  const { name,email,gender,locat,language,project} = req.body;//use data from (1)
+  const { name,email,gender,locat,project} = req.body;//use data from (1)
   const sql = "INSERT INTO user (name,email,gender,locat,language,project) VALUES (?,?,?,?,?,?)";
+  const language = Array.isArray(req.body.language) ? req.body.language.join(', ') : req.body.language;
   db.query(sql,[name,email,gender,locat,language,project], (err, result) => {
     try{
       return res.send(result);
@@ -58,8 +59,9 @@ app.delete('/del/:id',(req, res) => {
 
 app.put('/userupdate/:id',(req,res) => {
   const { id } = req.params;
-  const { name,email,gender,locat,language,project} = req.body;
+  const { name,email,gender,locat,project} = req.body;
   const sql = "UPDATE user SET name = ?,email = ?,gender = ?,locat = ?,language = ?,project = ? WHERE id = ?";
+  const language = Array.isArray(req.body.language) ? req.body.language.join(', ') : req.body.language;
   db.query(sql,[name,email,gender,locat,language,project,id],(err,rows) => {
     try{
       return res.send(rows);
