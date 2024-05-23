@@ -1,34 +1,36 @@
 body {
-  /* background: url('bg.jpg');
-  background-size: cover; */
+  background: url('bg.jpg');
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh; 
   margin: 0; 
   overflow: hidden;
+  position: relative;
 }
 
 body::before {
   content: '';
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 1  00%;
+  width: 100%;
   height: 100%; 
   background: inherit;
-  filter: blur(2px);
+  filter: blur(4px); 
   z-index: -1;
 }
 
-.form-container { 
-  width: 120%;
+.form-container {
+  width: 100%;
   max-width: 600px;
-  padding: 10px;
-  background-color: rgba(115, 119, 119, 0.603);
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .box {
@@ -76,10 +78,14 @@ label {
 .styl {
   background-color: white;
   color: black;
-  border: 3px rgb(0, 0, 0);
 }
 
-.button{
+.container {
+  height: 500px;
+  width: 50%;
+}
+
+.button {
   display: flex;
   justify-content: center;
 }
