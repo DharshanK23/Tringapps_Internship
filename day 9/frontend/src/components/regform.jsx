@@ -38,7 +38,7 @@ function Registration() {
       alert('Invalid email');
       return;
     }
-    axios.post('http://localhost:8081/user',formData)
+    axios.post('http://192.168.1.53:8081/user',formData)
       .then(() => {
         navigate("/home");
       })
