@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Style.css';
+import url from './url'
 
 function Registration() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ function Registration() {
       alert('Invalid email');
       return;
     }
-    axios.post('http://192.168.1.53:8081/user',formData)
+    axios.post(`${url.url}/user`,formData)
       .then(() => {
         navigate("/home");
       })

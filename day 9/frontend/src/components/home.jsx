@@ -7,6 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate } from 'react-router-dom';
+import url from './url'
 
 function Home() {
   const [users, setUsers] = useState([]);
@@ -18,7 +19,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.1.53:8081/users');
+        const response = await axios.get(`${url.url}/users`);
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -39,7 +40,7 @@ function Home() {
     };
     
     try {
-      await axios.put(`http://192.168.1.53:8081/userupdate/${newRow.id}`, updatedRow);
+      await axios.put(`${url.url}/${newRow.id}`, updatedRow);
       setUsers(users.map((user) => (user.id === newRow.id ? updatedRow : user)));
       setEditMode({ id: null });
       return updatedRow;
@@ -70,7 +71,7 @@ function Home() {
 
   const handleDeleteClick = async (id) => {
     try {
-      await axios.delete(`http://192.168.1.53:8081/del/${id}`);
+      await axios.delete(`${url.url}/del/${id}`);
       setUsers(users.filter((user) => user.id !== id));
     } catch (error) {
       console.error('Error deleting user:', error);
@@ -78,7 +79,7 @@ function Home() {
   };
   const handleCheckDel = async()=>{
     try {
-      await (arrid.map(id => axios.delete(`http://192.168.1.53:8081/del/${id}`)));
+      await (arrid.map(id => axios.delete(`${url.url}/del/${id}`)));
       setUsers(users.filter(user => !arrid.includes(user.id)));
       setArray([]);
     } catch (error) {
@@ -132,7 +133,9 @@ function Home() {
           processRowUpdate={handleProcessRowUpdate}
           experimentalFeatures={{ newEditingApi: true }}
           checkboxSelection
-          disableRowSelectionOnClick
+          disableRowSel
+          
+          ectionOnClick
           onRowSelectionModelChange={(ids)=>{
               setArray(ids);
           }}
