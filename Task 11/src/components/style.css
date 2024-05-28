@@ -1,3 +1,9 @@
 .center {
     text-align: center;
-  }
+    margin-top: 20px;
+}
+
+.file-preview {
+    margin: 20px 0;
+}
+
