@@ -23,7 +23,7 @@ function Excel({ file }) {
     }, [file]);
 
     return (
-        <div>
+        <div className='center'>
             <h3>{file.name}</h3>
             {sheets.map((sheet, index) => (
                 <div key={index}>

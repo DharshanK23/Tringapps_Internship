@@ -1,12 +1,45 @@
-.file {
-    margin: 20px 0;
-    width: 80%;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
 .center {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
-}
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  input {
+    margin: 20px 0;
+  }
+  
+  h3 {
+    margin-top: 10px;
+  }
+  
+  pre {
+    white-space: pre-wrap;
+    text-align: left;
+    margin: 10px 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+  }
+  
+  td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tr:hover {
+    background-color: #ddd;
+  }
+  
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }

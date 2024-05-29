@@ -1,9 +1,9 @@
 import React from 'react';
 
 function Audio({file}){
-    <div className="file">
-    return <audio controls src={file.content}></audio>;
-    </div>
+    return (
+        <div className='center'><audio controls src={file.content} type={file.type}></audio>;</div>
+    )
 }
 
 export default Audio;

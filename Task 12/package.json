@@ -9,6 +9,8 @@
     "axios": "^1.7.2",
     "docx": "^8.5.0",
     "docx-parser": "^0.2.1",
+    "mammoth": "^1.7.2",
+    "pdfjs": "^2.5.3",
     "pdfjs-dist": "^4.2.67",
     "pptxgenjs": "^3.12.0",
     "react": "^18.3.1",
@@ -16,7 +18,9 @@
     "react-data-grid": "^7.0.0-beta.44",
     "react-dom": "^18.3.1",
     "react-pdf": "^8.0.2",
+    "react-pptx": "^2.20.1",
     "react-scripts": "5.0.1",
+    "util": "^0.12.5",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
