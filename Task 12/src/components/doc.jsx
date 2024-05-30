@@ -2,21 +2,28 @@ import React, { useEffect, useState } from 'react';
 import mammoth from 'mammoth';
 
 function Docx({ file }) {
-    const [text, setText] = useState('');
+    const [content, setContent] = useState('');
 
     useEffect(() => {
-        const arrayBuffer = atob(file.content.split(',')[1]);
-        const byteArray = new Uint8Array(arrayBuffer.split('').map(char => char.charCodeAt(0)));
+        const fetchData = async () => {
+            const response = await fetch(file.content);
+            const arrayBuffer = await response.arrayBuffer();
+            mammoth.extractRawText({ arrayBuffer })
+                .then((result) => {
+                    setContent(result.value);
+                })
+                .catch((error) => {
+                    console.error('Error extracting text from DOCX:', error);
+                });
+        };
 
-        mammoth.extractRawText({ arrayBuffer: byteArray })
-            .then(result => setText(result.value))
-            .catch(err => console.error('Error reading DOCX file:', err));
+        fetchData();
     }, [file.content]);
 
     return (
-        <div className='center'>
+        <div>
             <h3>{file.name}</h3>
-            <pre>{text}</pre>
+            <pre>{content}</pre>
         </div>
     );
 }
