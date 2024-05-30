@@ -1,28 +1,44 @@
-import React, { useState } from 'react';
-import { Document, Page } from 'react-pdf';
+import React, { useState, useEffect } from 'react';
+import { getDocument } from 'pdfjs-dist/webpack';
 
-function Pdf({ file }) {
-    const [numPages, setNumPages] = useState(null);
-    const [pageNumber] = useState(1);
+function PdfViewer({ file }) {
+    const [pdfContent, setPdfContent] = useState("");
 
-    function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
-    }
+    useEffect(() => {
+        const loadPdfContent = async () => {
+            try {
+                const pdf = await getDocument({ data: file.content }).promise;
+                const content = await extractTextFromPDF(pdf);
+                setPdfContent(content);
+            } catch (error) {
+                console.error('Error', error);
+            }
+        };
+        loadPdfContent();
+    }, [file]);
+
+    const extractTextFromPDF = async (pdf) => {
+        let extractedContent = "";
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items
+                .map(item => item.str.trim())
+                .filter(str => str)
+                .join(' ');
+
+            extractedContent += pageText + "\n";
+        }
+
+        return extractedContent;
+    };
 
     return (
-        <div className='center'>
-            {file.content && (
-                <Document file={file.content} onLoadSuccess={onDocumentLoadSuccess}>
-                    <Page pageNumber={pageNumber} />
-                </Document>
-            )}
-            {file.content && (
-                <p>
-                    Page {pageNumber} of {numPages}
-                </p>
-            )}
+        <div className="card">
+            <p>{pdfContent}</p>
         </div>
     );
 }
 
-export default Pdf;
+export default PdfViewer;

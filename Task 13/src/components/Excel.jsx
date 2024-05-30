@@ -6,16 +6,13 @@ function Excel({ file }) {
 
     useEffect(() => {
         const loadExcel = async () => {
-            const arrayBuffer = await fetch(file.content).then(res => res.arrayBuffer());
-            const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-            const sheetNames = workbook.SheetNames;
-            const sheetData = sheetNames.map(sheetName => {
-                const worksheet = workbook.Sheets[sheetName];
-                return {
-                    name: sheetName,
-                    data: XLSX.utils.sheet_to_json(worksheet, { header: 1 })
-                };
-            });
+            const response = await fetch(file.content);
+            const arr = await response.arrayBuffer();
+            const workbook = XLSX.read(arr, { type: 'array' });
+            const sheetData = workbook.SheetNames.map(sheetName => ({
+                name: sheetName,
+                data: XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 })
+            }));
             setSheets(sheetData);
         };
 
@@ -23,11 +20,10 @@ function Excel({ file }) {
     }, [file]);
 
     return (
-        <div className='center'>
+        <div className="card">
             <h3>{file.name}</h3>
             {sheets.map((sheet, index) => (
                 <div key={index}>
-                    <h4>{sheet.name}</h4>
                     <table>
                         <tbody>
                             {sheet.data.map((row, rowIndex) => (
