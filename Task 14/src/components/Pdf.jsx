@@ -8,7 +8,7 @@ function PdfViewer({ file }) {
         const loadPdfContent = async () => {
             try {
                 const pdf = await getDocument({ data: file.content }).promise;
-                const content = await extractTextFromPDF(pdf);
+                const content = await TextFromPDF(pdf);
                 setPdfContent(content);
             } catch (error) {
                 console.error('Error', error);
@@ -17,7 +17,7 @@ function PdfViewer({ file }) {
         loadPdfContent();
     }, [file]);
 
-    const extractTextFromPDF = async (pdf) => {
+    const TextFromPDF = async (pdf) => {
         let extractedContent = "";
 
         for (let i = 1; i <= pdf.numPages; i++) {
