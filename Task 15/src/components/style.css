@@ -11,7 +11,7 @@
     border-color: #070707;
     background-color: #070707;
   }
-  .btn{
+.btn{
     padding: 15px; 
     position: fixed; 
     margin-top: 100px;
@@ -23,8 +23,7 @@
     cursor: pointer;
     font-size: large;
   }
-
-  .close{
+.close{
     background:none;
     border:none;
     color: #fafafa;

@@ -10,13 +10,12 @@ function Toast(){
     }
     return (
         <div>
-            <button  class="btn" onClick={buttonclick}>Click Here</button>
+            <button  className="btn" onClick={buttonclick}>Click Here</button>
             {toast && (<div id="snackbar">
             This is toast notification
-            <button class='close' onClick={Onclose}>&times;</button>
+            <button className='close' onClick={Onclose}>&times;</button>
             </div>)}
         </div>
     )
 }
-
 export default Toast;
