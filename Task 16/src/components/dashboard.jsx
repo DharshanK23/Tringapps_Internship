@@ -1,78 +1,87 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import {Drawer,AppBar,Toolbar,List,ListItem,ListItemText,Typography,TextField,Button,IconButton,Badge,Box,} from '@material-ui/core';
+import { Drawer, AppBar, Toolbar, List, ListItem, Typography, IconButton, Badge, Box } from '@material-ui/core';
 import { PersonAdd as AddUserIcon, Notifications as NotificationsIcon } from '@material-ui/icons';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Notification from './notification';
 
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
     display: 'flex',
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: 1500,
   },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
+    width: 70,
   },
   content: {
-    padding: '10px',
-    display: 'flex', 
+    padding: '30px',
+    display: 'flex',
     flexWrap: 'wrap',
   },
   notificationBadge: {
     marginLeft: 'auto',
   },
   squareBox: {
-    width: '230px', 
-    height: '150px',
-    marginBottom:'50px',
-    backgroundColor: "white", 
+    width: '120px',
+    maxHeight: '30px',
+    marginBottom: '30px',
   },
   userCard: {
     width: 'auto',
-    backgroundColor: 'grey',
+    backgroundColor: 'transparent',
     borderRadius: '20px',
     padding: '10px',
-    marginRight :"10px",
-    marginTop:"80px"
+    marginRight: '30px',
+    marginTop: '80px',
+    boxShadow: '0px 50px 50px rgba(0, 0, 0, 0), 0 10px 5px rgba(0, 0, 0, 0.08)',
   },
-}));
+};
 
 function Dashboard() {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [userCount, setUserCount] = useState(1);
   const [notifications, setNotifications] = useState([]);
+  const [openNotification, setOpenNotification] = useState(false);
 
   useEffect(() => {
     const storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
     setNotifications(storedNotifications);
+    const count = localStorage.getItem('userCount');
+    if (count) {
+      setUserCount(parseInt(count, 10));
+    }
   }, []);
 
-  
-  useEffect(() => {
-    localStorage.setItem('notifications', JSON.stringify(notifications));
-  }, [notifications]);
-
   const handleAddUser = () => {
-    const newUser = { name, email };
-    setNotifications([...notifications, newUser]);
-    setOpen(false);
-    toast.success('User added successfully!');
+    const newUser = { name: `User ${userCount}` };
+    const updatedNotifications = [...notifications, newUser];
+    setNotifications(updatedNotifications);
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+    const newUserCount = userCount + 1;
+    setUserCount(newUserCount);
+    localStorage.setItem('userCount', newUserCount);
+    toast.success(`User ${userCount} created...`);
+  };
+
+  const handleOpenNotification = () => {
+    setOpenNotification(true);
+  };
+
+  const handleCloseNotification = () => {
+    setOpenNotification(false);
+  };
+
+  const handleCancelNotification = (index) => {
+    const updatedNotifications = notifications.filter((_, i) => i !== index);
+    setNotifications(updatedNotifications);
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
   };
 
   return (
-    <div className={classes.root}>
-      <ToastContainer position="bottom-right" autoClose={5000} />
-      <AppBar position="fixed" className={classes.appBar}>
+    <div style={styles.root}>
+      <ToastContainer position="bottom-right" border="5px solid black" hideProgressBar={true} autoClose={3000} />
+      <AppBar position="fixed" style={styles.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
             User Dashboard
@@ -80,8 +89,8 @@ function Dashboard() {
           <IconButton
             color="inherit"
             aria-label="notifications"
-            onClick={() => setOpen(true)}
-            className={classes.notificationBadge}
+            onClick={handleOpenNotification}
+            style={styles.notificationBadge}
           >
             <Badge badgeContent={notifications.length} color="secondary">
               <NotificationsIcon />
@@ -89,61 +98,32 @@ function Dashboard() {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
+      <Drawer style={styles.drawer} variant="permanent">
         <Toolbar />
-        <div className={classes.drawerContainer}>
+        <div>
           <List>
-            <ListItem button onClick={() => setOpen(true)}>
+            <ListItem button onClick={handleAddUser}>
               <AddUserIcon />
-              <ListItemText primary="Add User" />
             </ListItem>
           </List>
         </div>
       </Drawer>
-      <main className={classes.content}>
+      <main style={styles.content}>
         {notifications.map((user, index) => (
-          <Box key={index} className={classes.squareBox}>
-            <Box className={classes.userCard}>
-              <Typography variant="subtitle1">{user.name}</Typography>
-              <Typography variant="subtitle2">{user.email}</Typography>
+          <Box key={index} style={styles.squareBox}>
+            <Box style={styles.userCard}>
+              <Typography>{user.name}</Typography>
             </Box>
           </Box>
         ))}
       </main>
-      <Drawer
-        className={classes.drawer}
-        variant="temporary"
-        open={open}
-        onClose={() => setOpen(false)}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <Toolbar />
-        <TextField
-          label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          margin="normal"
-        />
-        <TextField
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          margin="normal"
-        />
-        <Button variant="contained" color="primary" onClick={handleAddUser}>
-          Add
-        </Button>
-      </Drawer>
+      <Notification
+        notifications={notifications}
+        open={openNotification}
+        onClose={handleCloseNotification}
+        onCancel={handleCancelNotification}
+      />
     </div>
   );
 }
-
 export default Dashboard;
