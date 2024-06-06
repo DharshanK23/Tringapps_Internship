@@ -65,10 +65,10 @@ function Dashboard() {
   };
 
   const handleOpenNotification = () => {
-    setOpenNotification(true);
+    setOpenNotification(!openNotification);
   };
 
-  const handleCloseNotification = () => {
+  const handleCloseNotification = () => {     
     setOpenNotification(false);
   };
 
@@ -108,7 +108,8 @@ function Dashboard() {
           </List>
         </div>
       </Drawer>
-      <main style={styles.content}>
+      <main style={styles.content} onClick={handleCloseNotification}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }} onClick={handleCloseNotification}></div>
         {notifications.map((user, index) => (
           <Box key={index} style={styles.squareBox}>
             <Box style={styles.userCard}>
@@ -120,7 +121,6 @@ function Dashboard() {
       <Notification
         notifications={notifications}
         open={openNotification}
-        onClose={handleCloseNotification}
         onCancel={handleCancelNotification}
       />
     </div>

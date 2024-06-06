@@ -14,7 +14,7 @@ const styles = {
     overflowY: 'auto',
     maxHeight: '400px',
     width: '300px',
-    padding: '15px'
+    padding: '15px',
   },
   notificationItem: {
     display: 'flex',
@@ -28,17 +28,18 @@ const styles = {
     backgroundColor: 'white',
     padding: '10px',
     marginBottom: '10px',
-    borderRadius :'10px'
+    borderRadius: '10px',
   },
 };
 
-const Notification = ({ notifications,open,onClose,onCancel }) => {
-
+const Notification = ({ notifications, open, onCancel }) => {
   return (
-    <div style={styles.box} >
-      {open &&
+    <div style={styles.box}>
+      {open && (
         <div style={styles.Content}>
-          <Typography style={{ marginBottom: '20px',color:'white',fontWeight:'bold'}}>Notification</Typography>
+          <Typography style={{ marginBottom: '20px', color: 'white', fontWeight: 'bold' }}>
+            Notification
+          </Typography>
           {notifications.length === 0 ? (
             <Typography style={styles.card}>No notifications available</Typography>
           ) : (
@@ -49,14 +50,14 @@ const Notification = ({ notifications,open,onClose,onCancel }) => {
                     <Typography>{notification.name} added successfully</Typography>
                   </div>
                   <IconButton color="inherit" size="small" onClick={() => onCancel(index)}>
-                    <CloseIcon style={{ fontSize : 'small'}}/>
+                    <CloseIcon style={{ fontSize: 'small' }} />
                   </IconButton>
                 </div>
               </Card>
             ))
           )}
         </div>
-      }
+      )}
     </div>
   );
 };
